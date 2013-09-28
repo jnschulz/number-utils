@@ -6,4 +6,8 @@ object Factors {
       x => x :: num/x :: Nil
     }.flatten.toSet
   }
+
+  def distinctPrimeFactorsOf(num: Long): Set[Long] = {
+    divisorsOf(num).filter(Primes.isPrime)
+  }
 }
