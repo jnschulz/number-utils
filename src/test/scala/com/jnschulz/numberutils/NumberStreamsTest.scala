@@ -16,16 +16,14 @@ class NumberStreamsTest extends FunSpec with ShouldMatchers {
       NumberStreams.fibs.take(10).toList should equal (List(0, 1, 1, 2, 3, 5, 8, 13, 21, 34).map(BigInt(_)))
     }
 
-    it("should produce triangular numbers correctly") {
-      NumberStreams.triangularNumbers.take(5).toList should equal (List(1, 3, 6, 10, 15))
+    it("should produce general number streams (e.g. evens) correctly") {
+      val evens = NumberStreams.getNumberStream(n => 2*n)
+      evens.take(5).toList should equal (List(2, 4, 6, 8, 10))
     }
 
-    it("should produce pentagonal numbers correctly") {
-      NumberStreams.pentagonalNumbers.take(5).toList should equal (List(1, 5, 12, 22, 35))
-    }
-
-    it("should produce hexagonal numbers correctly") {
-      NumberStreams.hexagonalNumbers.take(5).toList should equal (List(1, 6, 15, 28, 45))
+    it("should produce general number streams (e.g. squares) correctly") {
+      val squares = NumberStreams.getNumberStream(n => n*n)
+      squares.take(5).toList should equal (List(1, 4, 9, 16, 25))
     }
   }
 }
