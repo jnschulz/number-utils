@@ -8,5 +8,22 @@ object NumberStreams {
     loop(1L)
   }
 
-  lazy val fibs: Stream[BigInt] = BigInt(0L) #:: BigInt(1L) #:: fibs.zip(fibs.tail).map{ case (x1, x2) => x1 + x2 }
+  def getNumberStream[T](firstValue: T, f:(T) => T): Stream[T] = {
+    def loop(nMinus1: T): Stream[T] = {
+      val n = f(nMinus1)
+      n #:: loop(n)
+    }
+    firstValue #:: loop(firstValue)
+  }
+
+  def getNumberStream[T](firstValue: T, secondValue: T, f:(T, T) => T): Stream[T] = {
+    def loop(nMinus1: T, nMinus2: T): Stream[T] = {
+      val n = f(nMinus1, nMinus2)
+      n #:: loop(n, nMinus1)
+    }
+    firstValue #:: secondValue #:: loop(secondValue, firstValue)
+  }
+
+  def fibs: Stream[BigInt] = NumberStreams.getNumberStream(BigInt(0), BigInt(1), (n1: BigInt, n2: BigInt) => n1 + n2)
+
 }
